@@ -9,8 +9,6 @@ exports.handler = (
   context: never,
   callback: APIGatewayProxyCallback
 ): void => {
-  console.log(process.env)
-
   // 未対応のHTTPメソッド
   // curl -i -X PUT http://localhost:9000/index
   if (["GET", "POST"].includes(event.httpMethod) === false) {
