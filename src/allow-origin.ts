@@ -6,6 +6,9 @@ import {
   Callback
 } from "aws-lambda"
 
+// デプロイ後のエンドポイント
+// https://sttaf34-netlify-functions.netlify.app/.netlify/functions/allow-origin
+
 export const handler: Handler = (
   event: APIGatewayProxyEvent,
   context: Context,

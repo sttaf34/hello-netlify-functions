@@ -6,13 +6,16 @@ import {
   Callback
 } from "aws-lambda"
 
+// デプロイ後のエンドポイント
+// https://sttaf34-netlify-functions.netlify.app/.netlify/functions/index
+
 export const handler: Handler = (
   event: APIGatewayProxyEvent,
   context: Context,
   callback: Callback
 ): void => {
   // GET
-  // curl -X GET http://localhost:9000/index
+  // curl -X GET http://localhost:9000/.netlify/functions/index
   if (event.httpMethod === "GET") {
     const result: APIGatewayProxyResult = {
       statusCode: 200,
@@ -24,7 +27,7 @@ export const handler: Handler = (
   }
 
   // POST
-  // curl -X POST http://localhost:9000/index -d "name=sttaf34&age=38"
+  // curl -X POST http://localhost:9000/.netlify/functions/index -d "age=38"
   if (event.httpMethod === "POST") {
     const result: APIGatewayProxyResult = {
       statusCode: 200,
@@ -36,7 +39,7 @@ export const handler: Handler = (
   }
 
   // 未対応のHTTPメソッド
-  // curl -i -X PUT http://localhost:9000/index
+  // curl -i -X PUT http://localhost:9000/.netlify/functions/index
   const result: APIGatewayProxyResult = {
     statusCode: 405,
     headers: {
