@@ -1,30 +1,16 @@
 import {
   APIGatewayProxyEvent,
-  APIGatewayProxyCallback,
-  APIGatewayProxyResult
+  APIGatewayProxyResult,
+  Handler,
+  Context,
+  Callback
 } from "aws-lambda"
 
-exports.handler = (
+export const handler: Handler = (
   event: APIGatewayProxyEvent,
-  context: never,
-  callback: APIGatewayProxyCallback
+  context: Context,
+  callback: Callback
 ): void => {
-  // 未対応のHTTPメソッド
-  // curl -i -X PUT http://localhost:9000/index
-  if (["GET", "POST"].includes(event.httpMethod) === false) {
-    const result: APIGatewayProxyResult = {
-      statusCode: 405,
-      headers: {
-        // eslint-disable-next-line prettier/prettier
-        "Allow": "GET, POST",
-        "Content-Type": "text/plain"
-      },
-      body: "Method Not Allowed\n"
-    }
-    callback(null, result)
-    return
-  }
-
   // GET
   // curl -X GET http://localhost:9000/index
   if (event.httpMethod === "GET") {
@@ -39,10 +25,26 @@ exports.handler = (
 
   // POST
   // curl -X POST http://localhost:9000/index -d "name=sttaf34&age=38"
+  if (event.httpMethod === "POST") {
+    const result: APIGatewayProxyResult = {
+      statusCode: 200,
+      headers: { "Content-Type": "text/plain" },
+      body: `Hello Netlify Functions POST! (${event.body})\n`
+    }
+    callback(null, result)
+    return
+  }
+
+  // 未対応のHTTPメソッド
+  // curl -i -X PUT http://localhost:9000/index
   const result: APIGatewayProxyResult = {
-    statusCode: 200,
-    headers: { "Content-Type": "text/plain" },
-    body: `Hello Netlify Functions POST! (${event.body})\n`
+    statusCode: 405,
+    headers: {
+      // eslint-disable-next-line prettier/prettier
+      "Allow": "GET, POST",
+      "Content-Type": "text/plain"
+    },
+    body: "Method Not Allowed\n"
   }
   callback(null, result)
 }

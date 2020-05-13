@@ -5,7 +5,6 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "strict": true,
-    "jsx": "react"
   },
   "include": [
     "src"
