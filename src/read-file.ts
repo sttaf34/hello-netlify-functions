@@ -19,7 +19,7 @@ type Order = {
 }
 
 const getOrders = (): string => {
-  const data = readFileSync(require.resolve("./assets/orders.csv"))
+  const data = readFileSync(require.resolve("../assets/orders.csv"))
   const orders: Order[] = parse(data, { columns: true })
   // TODO: エラー対応
   return JSON.stringify(orders)
