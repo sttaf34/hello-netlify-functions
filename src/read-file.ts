@@ -3,12 +3,27 @@ import {
   APIGatewayProxyResult,
   Handler,
   Context,
-  Callback
+  Callback,
 } from "aws-lambda"
-import { createReadStream } from "fs"
+import { readFileSync } from "fs"
+import parse from "csv-parse/lib/sync"
 
 // デプロイ後のエンドポイント
 // https://sttaf34-netlify-functions.netlify.app/.netlify/functions/read-file
+
+type Order = {
+  id: number
+  datetime: string // 注文日
+  priceOnOrder: number // 注文価格
+  cost: number // 原価
+}
+
+const getOrders = (): string => {
+  const data = readFileSync("./assets/orders.csv")
+  const orders: Order[] = parse(data, { columns: true })
+  // TODO: エラー対応
+  return JSON.stringify(orders)
+}
 
 export const handler: Handler = (
   event: APIGatewayProxyEvent,
@@ -17,23 +32,12 @@ export const handler: Handler = (
 ): void => {
   // GET
   // curl -X GET http://localhost:9000/.netlify/functions/read-file
-
-  // ファイル読みこんで表示する
-  // const contents = fs.readFileSync(require.resolve('./assets/test.txt'))
-
-
-
-  // JavaScriptのメモを書くときに使えるように、
-  // Access-Control-Allow-Origin 設定したものを用意しとく
   if (event.httpMethod === "GET") {
-    const randomNumber = Math.floor(Math.random() * 10000)
+    const orders = getOrders()
     const result: APIGatewayProxyResult = {
       statusCode: 200,
-      headers: {
-        "Content-Type": "text/plain",
-        "Access-Control-Allow-Origin": "*"
-      },
-      body: `${randomNumber}\n`
+      headers: { "Content-Type": "application/json" },
+      body: orders,
     }
     callback(null, result)
     return
@@ -46,9 +50,9 @@ export const handler: Handler = (
     headers: {
       // eslint-disable-next-line prettier/prettier
       "Allow": "GET",
-      "Content-Type": "text/plain"
+      "Content-Type": "text/plain",
     },
-    body: "Method Not Allowed\n"
+    body: "Method Not Allowed\n",
   }
   callback(null, result)
 }
