@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
+    "module": "ESNext",
+    "target": "ESNext",
     "sourceMap": true,
-    "strictNullChecks": true,
     "strict": true,
   },
   "include": [
