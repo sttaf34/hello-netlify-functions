@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "include": [
     "src"
