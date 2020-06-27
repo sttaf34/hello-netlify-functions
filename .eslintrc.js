@@ -4,11 +4,10 @@ module.exports = {
     "browser": true
   },
   "extends": [
-    "airbnb",
+    "airbnb-base",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
+    "prettier",
     "prettier/@typescript-eslint",
-    "prettier/react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -18,13 +17,17 @@ module.exports = {
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [".js", ".ts"]
       }
     }
   },
   "rules": {
     "no-console": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] } ],
-    "prettier/prettier": ["error", { "semi": false } ]
+    "prettier/prettier": ["error", { "semi": false } ],
+
+    // export default は基本使わないとする
+    // https://engineering.linecorp.com/ja/blog/you-dont-need-default-export/
+    "import/no-default-export": "error",
+    "import/prefer-default-export": "off",
   }
 }
