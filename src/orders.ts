@@ -5,11 +5,17 @@ import {
   Context,
   Callback,
 } from "aws-lambda"
-import { readFileSync } from "fs"
 import parse from "csv-parse/lib/sync"
+import { CSV_STRING } from "./data/orders-csv"
 
 // デプロイ後のエンドポイント
-// https://sttaf34-netlify-functions.netlify.app/.netlify/functions/read-file
+// https://sttaf34-netlify-functions.netlify.app/.netlify/functions/orders
+
+const errorResult: APIGatewayProxyResult = {
+  statusCode: 500,
+  headers: { "Content-Type": "text/plain" },
+  body: "Internal Server Error\n",
+}
 
 type Order = {
   id: number
@@ -18,33 +24,34 @@ type Order = {
   cost: number // 原価
 }
 
-const getOrders = (): string => {
-  const data = readFileSync(require.resolve("../assets/orders.csv"))
-  const orders: Order[] = parse(data, { columns: true })
-  // TODO: エラー対応
-  return JSON.stringify(orders)
-}
-
 export const handler: Handler = (
   event: APIGatewayProxyEvent,
   context: Context,
   callback: Callback
 ): void => {
   // GET
-  // curl -X GET http://localhost:9000/.netlify/functions/read-file
+  // curl -X GET http://localhost:9000/.netlify/functions/orders
   if (event.httpMethod === "GET") {
-    const orders = getOrders()
+    let body = ""
+    try {
+      const orders: Order[] = parse(CSV_STRING, { columns: true })
+      body = JSON.stringify(orders)
+    } catch (error) {
+      callback(null, errorResult)
+      return
+    }
+
     const result: APIGatewayProxyResult = {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: orders,
+      body,
     }
     callback(null, result)
     return
   }
 
   // 未対応のHTTPメソッド
-  // curl -i -X PUT http://localhost:9000/.netlify/functions/allow-origin
+  // curl -i -X PUT http://localhost:9000/.netlify/functions/orders
   const result: APIGatewayProxyResult = {
     statusCode: 405,
     headers: {

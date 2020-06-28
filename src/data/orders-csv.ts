@@ -1,3 +1,4 @@
+export const CSV_STRING = `
 id,datetime,price_on_order,cost
 1,2020-05-06,5216,3286
 2,2020-05-07,9287,7801
@@ -998,3 +999,4 @@ id,datetime,price_on_order,cost
 997,2020-05-16,8510,9021
 998,2020-05-30,2252,2049
 999,2020-05-14,4101,3281
+`
