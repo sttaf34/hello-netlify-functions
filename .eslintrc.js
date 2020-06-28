@@ -25,6 +25,11 @@ module.exports = {
     "no-console": "off",
     "prettier/prettier": ["error", { "semi": false } ],
 
+    // https://stackoverflow.com/questions/59265981/typescript-eslint-missing-file-extension-ts-import-extensions
+    "import/extensions": [
+      "error", "ignorePackages", { "ts": "never", "tsx": "never" }
+    ],
+
     // export default は基本使わないとする
     // https://engineering.linecorp.com/ja/blog/you-dont-need-default-export/
     "import/no-default-export": "error",
