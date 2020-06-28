@@ -43,7 +43,10 @@ export const handler: Handler = (
 
     const result: APIGatewayProxyResult = {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "https://profitable.netlify.app",
+      },
       body,
     }
     callback(null, result)

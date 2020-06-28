@@ -1,5 +1,5 @@
 export const CSV_STRING = `
-id,datetime,price_on_order,cost
+id,datetime,priceOnOrder,cost
 1,2020-05-06,5216,3286
 2,2020-05-07,9287,7801
 3,2020-05-21,2120,1972

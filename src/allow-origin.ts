@@ -3,7 +3,7 @@ import {
   APIGatewayProxyResult,
   Handler,
   Context,
-  Callback
+  Callback,
 } from "aws-lambda"
 
 // デプロイ後のエンドポイント
@@ -25,9 +25,9 @@ export const handler: Handler = (
       statusCode: 200,
       headers: {
         "Content-Type": "text/plain",
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "*",
       },
-      body: `${randomNumber}\n`
+      body: `${randomNumber}\n`,
     }
     callback(null, result)
     return
@@ -40,9 +40,9 @@ export const handler: Handler = (
     headers: {
       // eslint-disable-next-line prettier/prettier
       "Allow": "GET",
-      "Content-Type": "text/plain"
+      "Content-Type": "text/plain",
     },
-    body: "Method Not Allowed\n"
+    body: "Method Not Allowed\n",
   }
   callback(null, result)
 }
