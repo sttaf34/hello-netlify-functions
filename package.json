@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "develop": "netlify-lambda serve src/",
-    "eslint": "eslint --ext .tsx,.ts ./src/*",
+    "lint": "eslint --ext .ts ./src/*",
     "build": "netlify-lambda build src/"
   },
   "dependencies": {
