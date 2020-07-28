@@ -3,7 +3,7 @@ import {
   APIGatewayProxyResult,
   Handler,
   Context,
-  Callback
+  Callback,
 } from "aws-lambda"
 
 // デプロイ後のエンドポイント
@@ -20,7 +20,7 @@ export const handler: Handler = (
     const result: APIGatewayProxyResult = {
       statusCode: 200,
       headers: { "Content-Type": "text/plain" },
-      body: "Hello Netlify Functions GET!\n"
+      body: "Hello Netlify Functions GET!\n",
     }
     callback(null, result)
     return
@@ -32,7 +32,7 @@ export const handler: Handler = (
     const result: APIGatewayProxyResult = {
       statusCode: 200,
       headers: { "Content-Type": "text/plain" },
-      body: `Hello Netlify Functions POST! (${event.body})\n`
+      body: `Hello Netlify Functions POST! (${event.body})\n`,
     }
     callback(null, result)
     return
@@ -45,9 +45,9 @@ export const handler: Handler = (
     headers: {
       // eslint-disable-next-line prettier/prettier
       "Allow": "GET, POST",
-      "Content-Type": "text/plain"
+      "Content-Type": "text/plain",
     },
-    body: "Method Not Allowed\n"
+    body: "Method Not Allowed\n",
   }
   callback(null, result)
 }
